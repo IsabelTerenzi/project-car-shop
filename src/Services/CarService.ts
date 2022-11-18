@@ -15,6 +15,19 @@ class CarService {
     const newCar = await carModel.create(car);
     return this.createCarDomain(newCar);
   }
+
+  public async findAll() {
+    const carModel = new CarModel();
+    const cars = await carModel.findAll();
+    const carsArr = cars.map((car) => this.createCarDomain(car));
+    return carsArr;
+  }
+
+  public async findOne(id: string) {
+    const carModel = new CarModel();
+    const car = await carModel.findOne(id);
+    return this.createCarDomain(car); 
+  }
 }
 
 export default CarService;
