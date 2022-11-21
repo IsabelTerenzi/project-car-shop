@@ -15,6 +15,19 @@ class MotoService {
     const newMoto = await motoModel.create(moto);
     return this.createMotoDomain(newMoto);
   }
+
+  public async findAll() {
+    const motoModel = new MotoModel();
+    const motorcycles = await motoModel.findAll();
+    const motosArr = motorcycles.map((moto) => this.createMotoDomain(moto));
+    return motosArr;
+  }
+
+  public async findOne(id: string) {
+    const motoModel = new MotoModel();
+    const moto = await motoModel.findOne(id);
+    return this.createMotoDomain(moto); 
+  }
 }
 
 export default MotoService;

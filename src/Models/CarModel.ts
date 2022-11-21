@@ -16,14 +16,6 @@ class CarModel extends AbstractODM<ICar> {
     super(schema, 'Car');
   }
 
-  public async findAll(): Promise<ICar[]> {
-    return this.model.find();
-  }
-
-  public async findOne(id: string): Promise<ICar | null> {
-    return this.model.findById(id);
-  }
-
   public async update(id: string, carUpdated: ICar): Promise<ICar | null> {
     return this.model.findByIdAndUpdate({ _id: id }, { ...carUpdated }, { new: true });
   }
