@@ -28,6 +28,12 @@ class MotoService {
     const moto = await motoModel.findOne(id);
     return this.createMotoDomain(moto); 
   }
+
+  public async update(id: string, motoUpdated: IMotorcycle) {
+    const motoModel = new MotoModel();
+    const moto = await motoModel.update(id, motoUpdated);
+    return this.createMotoDomain(moto);
+  }
 }
 
 export default MotoService;

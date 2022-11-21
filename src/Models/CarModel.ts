@@ -15,10 +15,6 @@ class CarModel extends AbstractODM<ICar> {
     });
     super(schema, 'Car');
   }
-
-  public async update(id: string, carUpdated: ICar): Promise<ICar | null> {
-    return this.model.findByIdAndUpdate({ _id: id }, { ...carUpdated }, { new: true });
-  }
 }
 
 export default CarModel;
