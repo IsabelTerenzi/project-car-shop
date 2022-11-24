@@ -7,5 +7,6 @@ motoRouter.post('/', (req, res, next) => new MotoController(req, res, next).crea
 motoRouter.get('/', (req, res, next) => new MotoController(req, res, next).findAll());
 motoRouter.get('/:id', (req, res, next) => new MotoController(req, res, next).findOne());
 motoRouter.put('/:id', (req, res, next) => new MotoController(req, res, next).update());
+motoRouter.delete('/:id', (req, res, next) => new MotoController(req, res, next).delete());
 
 export default motoRouter;

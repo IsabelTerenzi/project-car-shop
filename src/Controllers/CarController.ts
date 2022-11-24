@@ -3,6 +3,8 @@ import { isValidObjectId } from 'mongoose';
 import ICar from '../Interfaces/ICar';
 import CarService from '../Services/CarService';
 
+const mongoInvalid = 'Invalid mongo id';
+
 class CarController {
   private req: Request;
   private res: Response;
@@ -48,7 +50,7 @@ class CarController {
     const { id } = this.req.params;
 
     if (!isValidObjectId(id)) {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });
+      return this.res.status(422).json({ message: mongoInvalid });
     }
 
     try {
@@ -68,7 +70,7 @@ class CarController {
     const { id } = this.req.params;
 
     if (!isValidObjectId(id)) {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });
+      return this.res.status(422).json({ message: mongoInvalid });
     }
 
     const carUpdated: ICar = {
@@ -89,6 +91,21 @@ class CarController {
       }
 
       return this.res.status(200).json(car);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async delete() {
+    const { id } = this.req.params;
+
+    if (!isValidObjectId(id)) {
+      return this.res.status(422).json({ message: mongoInvalid });
+    }
+
+    try {
+      await this.service.delete(id);      
+      return this.res.status(204).end();
     } catch (error) {
       this.next(error);
     }

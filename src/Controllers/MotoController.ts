@@ -3,6 +3,8 @@ import { isValidObjectId } from 'mongoose';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import MotoService from '../Services/MotoService';
 
+const mongoInvalid = 'Invalid mongo id';
+
 class MotoController {
   private req: Request;
   private res: Response;
@@ -48,7 +50,7 @@ class MotoController {
     const { id } = this.req.params;
 
     if (!isValidObjectId(id)) {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });
+      return this.res.status(422).json({ message: mongoInvalid });
     }
 
     try {
@@ -68,7 +70,7 @@ class MotoController {
     const { id } = this.req.params;
 
     if (!isValidObjectId(id)) {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });
+      return this.res.status(422).json({ message: mongoInvalid });
     }
 
     const motoUpdated: IMotorcycle = {
@@ -89,6 +91,21 @@ class MotoController {
       }
 
       return this.res.status(200).json(moto);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async delete() {
+    const { id } = this.req.params;
+
+    if (!isValidObjectId(id)) {
+      return this.res.status(422).json({ message: mongoInvalid });
+    }
+
+    try {
+      await this.service.delete(id);      
+      return this.res.status(204).end();
     } catch (error) {
       this.next(error);
     }

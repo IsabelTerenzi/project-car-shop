@@ -34,6 +34,11 @@ class MotoService {
     const moto = await motoModel.update(id, motoUpdated);
     return this.createMotoDomain(moto);
   }
+
+  public async delete(id: string) {
+    const motoModel = new MotoModel();
+    await motoModel.delete(id);
+  }
 }
 
 export default MotoService;
