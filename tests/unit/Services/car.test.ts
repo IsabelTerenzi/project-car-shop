@@ -21,6 +21,17 @@ describe('Testes da camada Service de Car', function () {
     seatsQty: 5,
   };
 
+  const carOutputUpdated = {
+    id: '634852326b35b59438fbea2f',
+    model: 'Marea',
+    year: 1992,
+    color: 'Red',
+    status: true,
+    buyValue: 12.000,
+    doorsQty: 2,
+    seatsQty: 5,
+  };
+
   it('Testa se é possível cadastrar um carro', async function () {
     const carInput: ICar = {
       model: 'Marea',
@@ -102,5 +113,25 @@ describe('Testes da camada Service de Car', function () {
     } catch (error) {
       expect((error as Error).message).to.be.deep.equal('Invalid mongo id');
     }
+  });
+
+  it('Testa se é possível atualizar um carro', async function () {
+    const idInput = '6377edd4c3bdb609d17eae9b';
+    const carInput: ICar = {
+      model: 'Marea',
+      year: 1992,
+      color: 'Red',
+      status: true,
+      buyValue: 12.000,
+      doorsQty: 2,
+      seatsQty: 5,
+    };
+
+    const carOutput: Car = new Car(carOutputUpdated);
+
+    sinon.stub(Model, 'findByIdAndUpdate').resolves(carOutput);
+    const service = new CarService();
+    const result = await service.update(idInput, carInput);
+    expect(result).to.be.deep.equal(carOutput);
   });
 });
